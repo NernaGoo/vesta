@@ -9,6 +9,12 @@ from dotenv import load_dotenv
 import random
 import requests
 from copy import deepcopy
+from requests.exceptions import (
+    HTTPError,
+    ConnectionError,
+    Timeout,
+    RequestException,
+)
 
 # Load API keys
 load_dotenv()
@@ -29,62 +35,25 @@ colors = {
 }
 
 character_codes = {
-    "a": "{1}",
-    "b": "{2}",
-    "c": "{3}",
-    "d": "{4}",
-    "e": "{5}",
-    "f": "{6}",
-    "g": "{7}",
-    "h": "{8}",
-    "i": "{9}",
-    "j": "{10}",
-    "k": "{11}",
-    "l": "{12}",
-    "m": "{13}",
-    "n": "{14}",
-    "o": "{15}",
-    "p": "{16}",
-    "q": "{17}",
-    "r": "{18}",
-    "s": "{19}",
-    "t": "{20}",
-    "u": "{21}",
-    "v": "{22}",
-    "w": "{23}",
-    "x": "{24}",
-    "y": "{25}",
-    "z": "{26}",
-    "one": "{27}",
-    "two": "{28}",
-    "three": "{29}",
-    "four": "{30}",
-    "five": "{31}",
-    "six": "{32}",
-    "seven": "{33}",
-    "eight": "{34}",
-    "nine": "{35}",
-    "zero": "{36}",
-    "exclamation": "{37}",
-    "at": "{38}",
-    "pound": "{39}",
-    "dollar": "{40}",
-    "left": "{41}",
-    "right": "{42}",
-    "hyphen": "{44}",
-    "plus": "{46}",
-    "ampersand": "{47}",
-    "equal": "{48}",
-    "semicolon": "{49}",
-    "colon": "{50}",
-    "single": "{52}",
-    "double": "{53}",
-    "percent": "{54}",
-    "comma": "{55}",
-    "period": "{56}",
-    "slash": "{59}",
-    "question": "{60}",
-    "filled": "{71}",
+    "!": "{37}",
+    "@": "{38}",
+    "#": "{39}",
+    "$": "{40}",
+    "<": "{41}",
+    ">": "{42}",
+    "-": "{44}",
+    "+": "{46}",
+    "&": "{47}",
+    "=": "{48}",
+    ";": "{49}",
+    ":": "{50}",
+    "'": "{52}",
+    '"': "{53}",
+    "%": "{54}",
+    ",": "{55}",
+    ".": "{56}",
+    "/": "{59}",
+    "?": "{60}",
 }
 
 
@@ -100,10 +69,13 @@ def send_text_to_vestaboard(text):
     headers = {"X-Vestaboard-Token": api_key}
     payload = {"text": text}
 
+    print("Sending text to vestaboard...")
     try:
         response = requests.post(url, headers=headers, json=payload)
+        response.raise_for_status()
+
     except requests.exceptions.RequestException as e:
-        print(f"Request failed: {e}")
+        print(f"Something went wrong. Reason:\n  {e}")
 
 
 def send_array_to_vestaboard(char_array):
@@ -113,34 +85,47 @@ def send_array_to_vestaboard(char_array):
     headers = {"X-Vestaboard-Token": api_key}
     payload = {"characters": char_array}
 
-    try:
-        response = requests.post(url, headers=headers, json=payload)
-    except requests.exceptions.RequestException as e:
-        print(f"Request failed: {e}")
+    if char_array is None:
+        print("Nothing to send.")
+
+    else:
+        try:
+            print("Sending message to vestaboard...")
+            response = requests.post(url, headers=headers, json=payload)
+            response.raise_for_status()
+            print("   Success!")
+
+        except Timeout:
+            print("Request timed out.")
+
+        except ConnectionError:
+            print("Unable to connect to the server.")
+
+        except HTTPError as err:
+            print(f"HTTP error: {err}")
+            print(f"Status: {response.status_code}")
+            print(response.text)
+
+        except ValueError as err:
+            print(f"Response error: {err}")
+
+        except RequestException as err:
+            print(f"Request failed: {err}")
+
+        except Exception as err:
+            print(f"Unexpected error: {err}")
 
 
 def send_msg_to_vestaboard(text):
     # Sends a message to vestaboard note for display 3x15
     # This reformats text by calling compose_vbml(); uses default props and components
     # https://docs.vestaboard.com/docs/read-write-api/endpoints
-    url = "https://cloud.vestaboard.com"
-    headers = {"X-Vestaboard-Token": api_key}
 
     # First, transform text into VBML formatted style, color, and justification
     # Then, send generated character array to board
-    print(f"character_array: {text}")
+    print(f"text: {text}")
     char_array = compose_vbml(text)
-    payload = {"characters": char_array}
-
-    print("Sending message to the Vestaboard Note...")
-    try:
-        results = requests.post(url=url, headers=headers, json=payload)
-        results.raise_for_status()
-        print("  Success!")
-
-    except results.exceptions.RequestException as e:
-        # This catches ALL requests-related errors
-        print(f"An error occurred: {e}")
+    send_array_to_vestaboard(char_array)
 
 
 def deep_merge(default, override):
@@ -183,14 +168,19 @@ def compose_vbml(text=None, props=None, components=None):
     url = "https://vbml.vestaboard.com/compose"
     characters = []
 
+    # Map special characters to character codes to avoid problems with translations
+    translation_table = {ord(key): value for key, value in character_codes.items()}
+    trtext = text.translate(translation_table)
+    print(f"Text with character codes (props): {trtext}")
+
     # Set props using the defaults or override with custom values
     # If text=value passed as a parameter, the value overrides the text key/value explicitly set in props
     if props is None:
         final_props = (
-            {**DEFAULT_PROPS, "text": text} if text is not None else {**DEFAULT_PROPS}
+            {**DEFAULT_PROPS, "text": trtext} if text is not None else {**DEFAULT_PROPS}
         )
     else:
-        final_props = {**props, "text": text} if text is not None else {**props}
+        final_props = {**props, "text": trtext} if text is not None else {**props}
     # print(f"final_props: {final_props}")
 
     # Merge components with user-defined values
@@ -212,7 +202,7 @@ def compose_vbml(text=None, props=None, components=None):
         print("  Success!")
 
     except requests.exceptions.RequestException as e:
-        print(f"An error occurred: {e}")
+        print(f"Something went wrong. Reason:\n  {e}")
 
     return characters
 
@@ -242,6 +232,7 @@ def send_array_with_local_api(char_array):
 
     try:
         response = requests.post(url, headers=headers, json=payload)
+        response.raise_for_status()
     except requests.exceptions.RequestException as e:
         print(f"Request failed: {e}")
 
