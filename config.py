@@ -170,7 +170,7 @@ def compose_vbml(text=None, props=None, components=None):
 
     # Map special characters to character codes to avoid problems with translations
     translation_table = {ord(key): value for key, value in character_codes.items()}
-    trtext = text.translate(translation_table)
+    trtext = text.translate(translation_table) if text is not None else None
     print(f"Text with character codes (props): {trtext}")
 
     # Set props using the defaults or override with custom values
