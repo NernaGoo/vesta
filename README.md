@@ -7,6 +7,8 @@ Scripts to display messages to Vestaboard Note
 This is a personal project. I wanted a way to automate the delivery of various random messages to a Vestaboard Note from a Raspberry Pi running raspbian (Linux) OS.
 Some data sources containing quotes and sayings are managed with local files; others are pulled from API sources from the internet.
 
+![alt text](assets/vesta_display.gif)
+
 ## 📌 Table of Contents
 - [🚀 Vestaboard Note](#-vestaboard-note)
   - [Description](#description)
@@ -47,7 +49,7 @@ source .venv/bin/activate
 ```
 3. Install python modules
 ```
-pip install dotenv argparse requests
+pip install -r requirements.txt
 ``` 
 
 ### 💡 Usage
@@ -101,7 +103,7 @@ $ crontab -l
   ```
     Vestaboard Note Display:
 
-    ![alt text](png/vnote_weather.png)
+    ![alt text](assets/vnote_weather.png)
 
 
 + [msg_vesta.py](msg_vesta.py)
@@ -128,7 +130,7 @@ $ crontab -l
 
     Vestaboard Note Display:
 
-    ![alt text](png/vnote_quote.png)
+    ![alt text](assets/vnote_quote.png)
   
   + Send your personal message to the vestaboard note:
   ```
@@ -145,7 +147,7 @@ $ crontab -l
 
   Vestaboard Note Display:
 
-  ![alt text](png/vnote_msg.png)
+  ![alt text](assets/vnote_msg.png)
 
 
 

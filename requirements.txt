@@ -1,0 +1,4 @@
+argparse
+dotenv
+requests
+typing
