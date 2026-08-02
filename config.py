@@ -168,6 +168,9 @@ def compose_vbml(text=None, props=None, components=None):
     url = "https://vbml.vestaboard.com/compose"
     characters = []
 
+    # Convert text to string
+    text = str(text) if text is not None else None
+
     # Map special characters to character codes to avoid problems with translations
     translation_table = {ord(key): value for key, value in character_codes.items()}
     trtext = text.translate(translation_table) if text is not None else None
@@ -180,6 +183,8 @@ def compose_vbml(text=None, props=None, components=None):
             {**DEFAULT_PROPS, "text": trtext} if text is not None else {**DEFAULT_PROPS}
         )
     else:
+        # Convert props into strings and replace special characters
+        props = {str(k): str(v).translate(translation_table) for k, v in props.items()}
         final_props = {**props, "text": trtext} if text is not None else {**props}
     # print(f"final_props: {final_props}")
 
