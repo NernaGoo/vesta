@@ -151,7 +151,8 @@ $ crontab -l
 
 
 
-+ countdaysvesta.py
++ [countdown_vesta.py](countdown_vesta.py)
+  > Count down the number of days until a target date
 + onthisdayvesta.py
 + history.py
 + quotes_vesta_local.py

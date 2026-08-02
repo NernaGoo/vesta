@@ -21,7 +21,7 @@ def get_args(parser):
     meg.add_argument(
         "-g",
         "--genre",
-        choices=["QUOTE", "JOKE", "INSPIRATION", "TRIVIA", "WORDS"],
+        choices=["QUOTE", "JOKE", "INSPIRATION", "TRIVIA", "WORD"],
         default="quote",
         help="Choose a genre. Default is 'quote'",
         type=str.upper,
