@@ -51,7 +51,7 @@ def main():
         # is event date in valid format
         if not is_valid_date_format(event_date):
             print(f"Error: {event_name} has invalid date format {event_date}")
-            print(f"Date must be in YYYY-MM-DD or MM-DD format")
+            print(f"Date must be in YYYY-m-d or m-d format, like 2040-09-17")
             sys.exit()
             
         # check if event_date is an annual event (no year defined)

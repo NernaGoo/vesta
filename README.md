@@ -77,8 +77,9 @@ AIR_JSON="ooooooooooooooooooooooo"
 
 ```
 $ crontab -l
+17 7 * * *     /home/pi/vesta/today_vesta.py
 # Runs every hour, starting in the morning
-47 9-20 * * * /home/pi/.venv/bin/python /home/pi/vesta/vestaboard_note.py
+47 9-20 * * * /home/pi/.venv/bin/python /home/pi/vesta/vestaboard_note.py | tee /tmp/vestaboard_note.out
 ```
 
 
@@ -110,11 +111,11 @@ $ crontab -l
   + Send a random message based on genre:
   ```
       $ ./msg_vesta.py -h
-    usage: msg_vesta.py [-h] [-g {QUOTE,JOKE,INSPIRATION,TRIVIA,WORDS} | -m MESSAGE]
+    usage: msg_vesta.py [-h] [-g {QUOTE,JOKE,INSPIRATION,TRIVIA,WORD} | -m MESSAGE]
 
     options:
       -h, --help            show this help message and exit
-      -g {QUOTE,JOKE,INSPIRATION,TRIVIA,WORDS}, --genre {QUOTE,JOKE,INSPIRATION,TRIVIA,WORDS}
+      -g {QUOTE,JOKE,INSPIRATION,TRIVIA,WORD}, --genre {QUOTE,JOKE,INSPIRATION,TRIVIA,WORD}
                             Choose a genre. Default is 'quote'
       -m MESSAGE, --message MESSAGE
                             Send a message using single-quotes in 45 characters or less.
@@ -157,6 +158,9 @@ $ crontab -l
 + history.py
 + quotes_vesta_local.py
 + today_vesta.py
+  > Sends today's date to the vestaboard
+
+  ![alt text](assets/vesta_date.png)
 + vestaboard_note.py
   > Executes a random script to rotate through different kinds of messages for variety (weather, jokes, trivia, vocabulary, inspirational notes, etc.)
 
