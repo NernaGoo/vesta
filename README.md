@@ -157,20 +157,25 @@ $ crontab -l
 + onthisdayvesta.py
 + history.py
 + quotes_vesta_local.py
-+ today_vesta.py
++ [today_vesta.py](today_vesta.py)
   > Sends today's date to the vestaboard
 
   ![alt text](assets/vesta_date.png)
 + vestaboard_note.py
-  > Executes a random script to rotate through different kinds of messages for variety (weather, jokes, trivia, vocabulary, inspirational notes, etc.)
+  > Executes a random script to rotate through a variety of messages (weather, jokes, trivia, vocabulary, inspirational notes, etc.)
 
++ [stock_vesta.py](stock_vesta.py)
+  > Displays stock market quotes
+
+  ![alt text](assets/vesta_stock_01.png)
+
+  ![alt text](assets/vesta_stock_02.png)
 
 #### Bash Scripts
 + defaultvesta.sh
 + eventsvesta.sh
 + morningvesta.sh
 + nexteventvesta.sh
-+ stockvesta.sh
 + update_events.sh
 
 ## 📝 Reference

@@ -2,3 +2,4 @@ argparse
 dotenv
 requests
 typing
+finnhub-python

@@ -11,17 +11,18 @@ import sys
 #  --------------- EVENT LIST -------------- #
 # Date format is in YYYY-MM-DD
 # For annual events, drop the year
-events = {
+events = {  # Event name should be 15 chars or less to fit vestaboard note
     "New Year": "01-01",
     "4th of July": "07-04",
-    "Petra's Birthday": "08-01",
+    "Petra's Bday": "08-01",
     "Anniversary": "10-04",
     "Halloween": "10-31",
     "Christmas": "12-25",
     "Thanksgiving": "2026-11-26",
     "Labor Day": "2026-09-07",
-    "Vacation": "2026-09-25"
+    "Vacation": "2026-09-25",
 }
+
 
 def is_valid_date_format(event_date):
     # Check for valid date format
@@ -30,22 +31,25 @@ def is_valid_date_format(event_date):
         datetime.strptime(event_date, "%Y-%m-%d")
         return True
     except ValueError:
-        pass # If it fails, move on to the next test
+        pass  # If it fails, move on to the next test
 
     # Next, validate annual event date format
     try:
         datetime.strptime(event_date, "%m-%d")
         return True
     except ValueError:
-        pass 
-        
+        pass
+
     # If both failed, the format is invalid
     return False
+
 
 def main():
     # Get today's date
     today = datetime.now()
-    future_events = [] # new list to hold today, annual, or future events; ignore past one-off events
+    future_events = (
+        []
+    )  # new list to hold today, annual, or future events; ignore past one-off events
 
     for event_name, event_date in events.items():
         # is event date in valid format
@@ -53,7 +57,7 @@ def main():
             print(f"Error: {event_name} has invalid date format {event_date}")
             print(f"Date must be in YYYY-m-d or m-d format, like 2040-09-17")
             sys.exit()
-            
+
         # check if event_date is an annual event (no year defined)
         # if so, count down to this year or if event passed, next year
         try:
@@ -65,10 +69,10 @@ def main():
         except ValueError:
             target_date = datetime.strptime(event_date, "%m-%d")
             target_date = target_date.replace(year=today.year)
-            
+
             if target_date.date() < today.date():
                 target_date = target_date.replace(year=today.year + 1)
-                
+
             # Annual events are always in the future (or today), so add them
             future_events.append((event_name, target_date))
 
