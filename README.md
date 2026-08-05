@@ -135,7 +135,7 @@ $ crontab -l
   
   + Send your personal message to the vestaboard note:
   ```
-   ./msg_vesta.py -m "Hello World!" 
+   $ ./msg_vesta.py -m "Hello World!"
   character_array: Hello World!
   Composing output with VBML characters...
   characters: [[69, 8, 5, 12, 12, 15, 0, 23, 15, 18, 12, 4, 37, 63, 0], [63, 63, 63, 63, 63, 63, 63, 63, 63, 63, 63, 63, 63, 63, 63], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
@@ -151,9 +151,10 @@ $ crontab -l
   ![alt text](assets/vnote_msg.png)
 
 
-
 + [countdown_vesta.py](countdown_vesta.py)
   > Count down the number of days until a target date
+
+  ![alt text](assets/vesta_countdown.png)
 + onthisdayvesta.py
 + history.py
 + quotes_vesta_local.py
@@ -168,8 +169,22 @@ $ crontab -l
   > Displays stock market quotes
 
   ![alt text](assets/vesta_stock_01.png)
-
   ![alt text](assets/vesta_stock_02.png)
+
++ [calendar_vesta.py](calendar_vesta.py)
+  > Display google calendar events
+  ```
+     $ ./calendar_vesta.py -h
+    usage: calendar_vesta.py [-h] -o {agenda,next}
+
+    options:
+      -h, --help            show this help message and exit
+      -o {agenda,next}, --output {agenda,next}
+                            agenda: display full day agenda. next: display today's next upcoming apointment
+  ```
+![alt text](assets/vesta_event_01.png)
+![alt text](assets/vesta_event_02.png)
+
 
 #### Bash Scripts
 + defaultvesta.sh
@@ -183,3 +198,4 @@ $ crontab -l
 * [Vestaboard Cloud API](https://docs.vestaboard.com/docs/read-write-api/introduction/)
 * [Finnhub](https://finnhub.io/docs/api/quote)
 * [OpenWeather](https://openweathermap.org/api/current?collection=current_forecast)
+* [Google Auth](https://developers.google.com/workspace/guides/auth-overview)

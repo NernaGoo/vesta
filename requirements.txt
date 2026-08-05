@@ -3,3 +3,6 @@ dotenv
 requests
 typing
 finnhub-python
+google-api-python-client
+google-auth
+google-auth-oauthlib
