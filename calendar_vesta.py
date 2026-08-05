@@ -228,6 +228,7 @@ def main():
         if args.output == "next":
             show_next_event(events)
 
+        # Show today's agenda on Vestaboard
         if args.output == "agenda":
             show_agenda(events)
 

@@ -174,7 +174,7 @@ def compose_vbml(text=None, props=None, components=None):
     # Map special characters to character codes to avoid problems with translations
     translation_table = {ord(key): value for key, value in character_codes.items()}
     trtext = text.translate(translation_table) if text is not None else None
-    print(f"Text with character codes (props): {trtext}")
+    # print(f"Text with character codes (props): {trtext}")
 
     # Set props using the defaults or override with custom values
     # If text=value passed as a parameter, the value overrides the text key/value explicitly set in props
@@ -203,7 +203,7 @@ def compose_vbml(text=None, props=None, components=None):
         results = requests.post(url, json=payload)
         results.raise_for_status()
         characters = results.json()
-        print(f"characters: {characters}")
+        # print(f"characters: {characters}")
         print("  Success!")
 
     except requests.exceptions.RequestException as e:

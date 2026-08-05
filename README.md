@@ -187,11 +187,8 @@ $ crontab -l
 
 
 #### Bash Scripts
-+ defaultvesta.sh
-+ eventsvesta.sh
-+ morningvesta.sh
-+ nexteventvesta.sh
-+ update_events.sh
++ [hellovesta.sh](hellovesta.sh)
+  > Example CURL commands for sending messages to Vestaboard Note
 
 ## 📝 Reference
 
