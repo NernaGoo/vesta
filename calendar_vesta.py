@@ -161,8 +161,6 @@ def show_agenda(events):
 def get_next_event(events):
     # ---------- Return the next future event ---------- #
     now = datetime.now().time()
-    event = []
-
     for event in events:
         for event_time, event_title in event.items():
             if event_time.startswith("DAY"):
@@ -170,8 +168,7 @@ def get_next_event(events):
             scheduled_time = datetime.strptime(event_time, "%I:%M%p").time()
             if scheduled_time > now:
                 return event  # return value when next appointment found
-
-    return event
+    return None
 
 
 def show_next_event(events):
